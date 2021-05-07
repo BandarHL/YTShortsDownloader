@@ -1,0 +1,9 @@
+Package: com.bandarhl.YTShortsDownloader
+Name: YTShortsDownloader
+Version: 1.0
+Description: Awesome tweak to download youtube shorts
+Section: Tweaks
+Depends: firmware (>= 13.0), mobilesubstrate
+Priority: optional
+Architecture: iphoneos-arm
+Author: BandarHelal
