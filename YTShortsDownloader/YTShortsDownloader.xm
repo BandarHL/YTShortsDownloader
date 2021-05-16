@@ -70,12 +70,12 @@
     NSURL *newFilePath = [[NSURL fileURLWithPath:DocPath] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", NSUUID.UUID.UUIDString]];
     [manager moveItemAtURL:filePath toURL:newFilePath error:nil];
     
-    [[PHPhotoLibrary sharedPhotoLibrary] performChanges:^{
-        [PHAssetChangeRequest creationRequestForAssetFromVideoAtFileURL:newFilePath];
-    } completionHandler:^(BOOL success, NSError * _Nullable error) {
-        [self.hud dismiss];
+    [self.hud dismiss];
+    UIActivityViewController *acVC = [[UIActivityViewController alloc] initWithActivityItems:@[newFilePath] applicationActivities:nil];
+    [acVC setCompletionWithItemsHandler:^(UIActivityType _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
         [self closeWindow];
     }];
+    [self.window2.rootViewController presentViewController:acVC animated:true completion:nil];
 }
 %new - (void)downloadDidFailureWithError:(NSError *)error {
     if (error) {
