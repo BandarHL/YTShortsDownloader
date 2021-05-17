@@ -36,7 +36,7 @@
     YTSingleVideoController *video = self.player.activeVideo;
     for (MLFormat *format in video.selectableVideoFormats) {
         if ([format.formatStream.mimeType containsString:@"video/mp4"]) {
-            UIAlertAction *download = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%dx%d", format.formatStream.width, format.formatStream.height] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
+            UIAlertAction *download = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%dx%d", format.formatStream.height, format.formatStream.width] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
                 BHDownload *DownloadManager = [[BHDownload alloc] initWithBackgroundSessionID:NSUUID.UUID.UUIDString];
                 [DownloadManager downloadFileWithURL:[NSURL URLWithString:format.formatStream.URL]];
@@ -65,17 +65,56 @@
 }
 
 %new - (void)downloadDidFinish:(NSURL *)filePath Filename:(NSString *)fileName {
-    NSString *DocPath = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject;
     NSFileManager *manager = [NSFileManager defaultManager];
-    NSURL *newFilePath = [[NSURL fileURLWithPath:DocPath] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", NSUUID.UUID.UUIDString]];
+    NSURL *newFilePath = [[NSURL fileURLWithPath:NSTemporaryDirectory()] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.mp4", NSUUID.UUID.UUIDString]];
     [manager moveItemAtURL:filePath toURL:newFilePath error:nil];
     
-    [self.hud dismiss];
-    UIActivityViewController *acVC = [[UIActivityViewController alloc] initWithActivityItems:@[newFilePath] applicationActivities:nil];
-    [acVC setCompletionWithItemsHandler:^(UIActivityType _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-        [self closeWindow];
-    }];
-    [self.window2.rootViewController presentViewController:acVC animated:true completion:nil];
+    if ([self.player.activeVideo isKindOfClass:NSClassFromString(@"YTSingleVideoController")]) {
+        YTSingleVideoController *video = self.player.activeVideo;
+        [[[NSURLSession sharedSession] downloadTaskWithURL:[NSURL URLWithString:video.selectedAudioFormat.formatStream.URL] completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
+            if (error) {
+                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self.hud dismiss];
+                        [self closeWindow];
+                    });
+                });
+            } else {
+                // rename the audio file with .m4a extension and move it
+                NSURL *newAudioFilePath = [[NSURL fileURLWithPath:NSTemporaryDirectory()] URLByAppendingPathComponent:[NSString stringWithFormat:@"%@.m4a", NSUUID.UUID.UUIDString]];
+                [manager moveItemAtURL:location toURL:newAudioFilePath error:nil];
+                // 1- cut video by half
+                AVURLAsset *asset = [AVURLAsset URLAssetWithURL:newFilePath options:nil];
+                [BHVideoManager TrimVideoWithPath:newFilePath StartTime:kCMTimeZero EndTime:CMTimeMake(asset.duration.value/2, asset.duration.timescale) SaveFileToPath:[NSURL fileURLWithPath:NSTemporaryDirectory()] TitleFile:NSUUID.UUID.UUIDString CompletionHandler:^(AVAssetExportSession *cutVideoSession) {
+                    if (AVAssetExportSessionStatusCompleted == cutVideoSession.status) {
+                        // 2- merge video with audio
+                        [BHVideoManager MergeVideo:cutVideoSession.outputURL WithAudio:newAudioFilePath SaveFileToPath:[NSURL fileURLWithPath:NSTemporaryDirectory()] TitleFile:NSUUID.UUID.UUIDString CompletionHandler:^(AVAssetExportSession *audioSession) {
+                            if (AVAssetExportSessionStatusCompleted == audioSession.status) {
+                                // we MUST to get back to main queue so we can edit on the LAYOUT
+                                dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+                                    dispatch_async(dispatch_get_main_queue(), ^{
+                                        [self.hud dismiss];
+                                        UIActivityViewController *acVC = [[UIActivityViewController alloc] initWithActivityItems:@[audioSession.outputURL] applicationActivities:nil];
+                                        [acVC setCompletionWithItemsHandler:^(UIActivityType _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+                                            [self closeWindow];
+                                        }];
+                                        [self.window2.rootViewController presentViewController:acVC animated:true completion:nil];
+                                    });
+                                });
+                            }
+                        }];
+                    }
+                }];
+            }
+        }] resume];
+    } else {
+        [self.hud dismiss];
+        UIActivityViewController *acVC = [[UIActivityViewController alloc] initWithActivityItems:@[newFilePath] applicationActivities:nil];
+        [acVC setCompletionWithItemsHandler:^(UIActivityType _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
+            [self closeWindow];
+        }];
+        [self.window2.rootViewController presentViewController:acVC animated:true completion:nil];
+    }
 }
 %new - (void)downloadDidFailureWithError:(NSError *)error {
     if (error) {

@@ -43,6 +43,13 @@
 		501D0AEA2645CEC500157631 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501D0AE92645CEC500157631 /* SceneKit.framework */; };
 		501D0AEC2645CECE00157631 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501D0AEB2645CECE00157631 /* ImageIO.framework */; };
 		501D0AEE2645CEE200157631 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501D0AED2645CEE200157631 /* CoreGraphics.framework */; };
+		50882E0626519B23003C7375 /* BHVideoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50882E0426519B23003C7375 /* BHVideoManager.h */; };
+		50882E0726519B23003C7375 /* BHVideoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50882E0526519B23003C7375 /* BHVideoManager.m */; };
+		50882E0926519DA4003C7375 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50882E0826519DA4003C7375 /* CoreMedia.framework */; };
+		50882E0C26519DB6003C7375 /* AVKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50882E0A26519DB6003C7375 /* AVKit.framework */; };
+		50882E0D26519DB6003C7375 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50882E0B26519DB6003C7375 /* AVFoundation.framework */; };
+		50882E0F26519DBD003C7375 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50882E0E26519DBD003C7375 /* MediaPlayer.framework */; };
+		50882E1126519DC2003C7375 /* MediaToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50882E1026519DC2003C7375 /* MediaToolbox.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +95,13 @@
 		501D0AE92645CEC500157631 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		501D0AEB2645CECE00157631 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		501D0AED2645CEE200157631 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		50882E0426519B23003C7375 /* BHVideoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHVideoManager.h; sourceTree = "<group>"; };
+		50882E0526519B23003C7375 /* BHVideoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHVideoManager.m; sourceTree = "<group>"; };
+		50882E0826519DA4003C7375 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		50882E0A26519DB6003C7375 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		50882E0B26519DB6003C7375 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		50882E0E26519DBD003C7375 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		50882E1026519DC2003C7375 /* MediaToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaToolbox.framework; path = System/Library/Frameworks/MediaToolbox.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,13 +109,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				50882E0926519DA4003C7375 /* CoreMedia.framework in Frameworks */,
 				501D0A942645C7EC00157631 /* UIKit.framework in Frameworks */,
+				50882E0D26519DB6003C7375 /* AVFoundation.framework in Frameworks */,
 				501D0AE82645CDAC00157631 /* Photos.framework in Frameworks */,
 				501D0AEC2645CECE00157631 /* ImageIO.framework in Frameworks */,
 				501D0AEE2645CEE200157631 /* CoreGraphics.framework in Frameworks */,
+				50882E0F26519DBD003C7375 /* MediaPlayer.framework in Frameworks */,
 				501D0AEA2645CEC500157631 /* SceneKit.framework in Frameworks */,
 				501D0A962645C7EC00157631 /* Foundation.framework in Frameworks */,
+				50882E1126519DC2003C7375 /* MediaToolbox.framework in Frameworks */,
 				501D0AE62645CB0700157631 /* QuartzCore.framework in Frameworks */,
+				50882E0C26519DB6003C7375 /* AVKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +147,11 @@
 		501D0A922645C7EC00157631 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				50882E1026519DC2003C7375 /* MediaToolbox.framework */,
+				50882E0E26519DBD003C7375 /* MediaPlayer.framework */,
+				50882E0B26519DB6003C7375 /* AVFoundation.framework */,
+				50882E0A26519DB6003C7375 /* AVKit.framework */,
+				50882E0826519DA4003C7375 /* CoreMedia.framework */,
 				501D0AED2645CEE200157631 /* CoreGraphics.framework */,
 				501D0AEB2645CECE00157631 /* ImageIO.framework */,
 				501D0AE92645CEC500157631 /* SceneKit.framework */,
@@ -143,6 +167,7 @@
 		501D0A992645C7EC00157631 /* YTShortsDownloader */ = {
 			isa = PBXGroup;
 			children = (
+				50882E0326519B19003C7375 /* BHVideoManager */,
 				501D0AAD2645C88E00157631 /* BHDownload.h */,
 				501D0AAE2645C88F00157631 /* BHDownload.m */,
 				501D0AAB2645C86900157631 /* YTHeaders.h */,
@@ -244,6 +269,15 @@
 			path = include;
 			sourceTree = "<group>";
 		};
+		50882E0326519B19003C7375 /* BHVideoManager */ = {
+			isa = PBXGroup;
+			children = (
+				50882E0426519B23003C7375 /* BHVideoManager.h */,
+				50882E0526519B23003C7375 /* BHVideoManager.m */,
+			);
+			path = BHVideoManager;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -253,6 +287,7 @@
 			files = (
 				501D0AD52645CAF100157631 /* JGProgressHUDRingIndicatorView.h in Headers */,
 				501D0AD92645CAF100157631 /* JGProgressHUDErrorIndicatorView.h in Headers */,
+				50882E0626519B23003C7375 /* BHVideoManager.h in Headers */,
 				501D0AD22645CAF100157631 /* JGProgressHUD.h in Headers */,
 				501D0ADB2645CAF100157631 /* JGProgressHUDFadeZoomAnimation.h in Headers */,
 				501D0AAF2645C88F00157631 /* BHDownload.h in Headers */,
@@ -370,6 +405,7 @@
 				501D0ADD2645CAF100157631 /* JGProgressHUDImageIndicatorView.m in Sources */,
 				501D0ACC2645CAF100157631 /* JGProgressHUDIndeterminateIndicatorView.m in Sources */,
 				501D0AE42645CAF100157631 /* JGProgressHUDShadow.m in Sources */,
+				50882E0726519B23003C7375 /* BHVideoManager.m in Sources */,
 				501D0AE22645CAF100157631 /* JGProgressHUDRingIndicatorView.m in Sources */,
 				501D0ADF2645CAF100157631 /* JGProgressHUDIndicatorView.m in Sources */,
 				501D0ACE2645CAF100157631 /* JGProgressHUDAnimation.m in Sources */,
@@ -459,12 +495,12 @@
 				MonkeyDevBuildPackageOnAnyBuild = NO;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
-				MonkeyDevDeviceIP = 192.168.137.89;
+				MonkeyDevDeviceIP = 192.168.137.131;
 				MonkeyDevDevicePassword = alpine;
 				MonkeyDevDevicePort = 22;
 				MonkeyDevInstallOnAnyBuild = YES;
 				MonkeyDevInstallOnProfiling = YES;
-				MonkeyDevkillProcessOnInstall = SpringBoard;
+				MonkeyDevkillProcessOnInstall = YouTube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -488,12 +524,12 @@
 				MonkeyDevBuildPackageOnAnyBuild = NO;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
-				MonkeyDevDeviceIP = 192.168.137.89;
+				MonkeyDevDeviceIP = 192.168.137.131;
 				MonkeyDevDevicePassword = alpine;
 				MonkeyDevDevicePort = 22;
 				MonkeyDevInstallOnAnyBuild = YES;
 				MonkeyDevInstallOnProfiling = YES;
-				MonkeyDevkillProcessOnInstall = SpringBoard;
+				MonkeyDevkillProcessOnInstall = YouTube;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";

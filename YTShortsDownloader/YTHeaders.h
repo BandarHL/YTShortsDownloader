@@ -7,6 +7,7 @@
 
 #import "BHDownload.h"
 #import "JGProgressHUD/include/JGProgressHUD.h"
+#import "BHVideoManager/BHVideoManager.h"
 
 @interface YTQTMButton : UIButton
 @property(readonly, nonatomic) long long pageStyle;
@@ -75,6 +76,7 @@
 @end
 
 @interface YTSingleVideoController : NSObject
+@property(readonly, nonatomic) MLFormat *selectedAudioFormat;
 @property(readonly, nonatomic) NSArray *selectableVideoFormats;
 @property(readonly, nonatomic) NSArray *selectableAudioFormats;
 @end
@@ -107,20 +109,4 @@
 @interface YTReelContentView : UIView
 @property(readonly, nonatomic) YTReelWatchPlaybackOverlayView *playbackOverlay;
 @property(readonly, nonatomic) __weak id parentResponder;
-@end
-
-@interface YTActionSheetDialogViewController : UIViewController
-@end
-
-@interface YTActionSheetAction : NSObject
-+ (id)actionWithTitle:(id)arg1 style:(long long)arg2 handler:(void (^ __nullable)(YTActionSheetAction *action))arg3;
-@end
-
-@interface YTActionSheetController : NSObject
-@property(readonly, nonatomic) YTActionSheetDialogViewController *dialogViewController;
-@property(readonly, nonatomic) UIViewController *containerViewController;
-- (_Bool)shouldAddCancelAction;
-- (id)initWithMessage:(id)arg1 subMessage:(id)arg2;
-- (void)addAction:(id)arg1;
-- (void)addCancelActionIfNeededWithTitle:(id)arg1;
 @end
