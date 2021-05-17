@@ -110,3 +110,8 @@
 @property(readonly, nonatomic) YTReelWatchPlaybackOverlayView *playbackOverlay;
 @property(readonly, nonatomic) __weak id parentResponder;
 @end
+
+@interface YTAppDelegate : UIResponder
+- (void)cleanCache;
+- (BOOL)isEmpty:(NSURL *)url;
+@end

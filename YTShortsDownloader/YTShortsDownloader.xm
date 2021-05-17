@@ -4,6 +4,53 @@
 
 %config(generator=internal)
 
+%hook YTAppDelegate
+- (_Bool)application:(UIApplication *)application didFinishLaunchingWithOptions:(id)arg2 {
+    %orig;
+    [self cleanCache];
+    return true;
+}
+%new - (void)cleanCache {
+    NSArray <NSURL *> *DocumentFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL fileURLWithPath:NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, true).firstObject] includingPropertiesForKeys:@[] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
+    
+    for (NSURL *file in DocumentFiles) {
+        if ([file.pathExtension.lowercaseString isEqualToString:@"mp4"]) {
+            [[NSFileManager defaultManager] removeItemAtURL:file error:nil];
+        }
+    }
+    
+    NSArray <NSURL *> *TempFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:[NSURL fileURLWithPath:NSTemporaryDirectory()] includingPropertiesForKeys:@[] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
+    
+    for (NSURL *file in TempFiles) {
+        if ([file.pathExtension.lowercaseString isEqualToString:@"mp4"]) {
+            [[NSFileManager defaultManager] removeItemAtURL:file error:nil];
+        }
+        if ([file.pathExtension.lowercaseString isEqualToString:@"mov"]) {
+            [[NSFileManager defaultManager] removeItemAtURL:file error:nil];
+        }
+        if ([file.pathExtension.lowercaseString isEqualToString:@"m4a"]) {
+            [[NSFileManager defaultManager] removeItemAtURL:file error:nil];
+        }
+        if ([file.pathExtension.lowercaseString isEqualToString:@"tmp"]) {
+            [[NSFileManager defaultManager] removeItemAtURL:file error:nil];
+        }
+        if ([file hasDirectoryPath]) {
+            if ([self isEmpty:file]) {
+                [[NSFileManager defaultManager] removeItemAtURL:file error:nil];
+            }
+        }
+    }
+}
+%new - (BOOL)isEmpty:(NSURL *)url {
+    NSArray *FolderFiles = [[NSFileManager defaultManager] contentsOfDirectoryAtURL:url includingPropertiesForKeys:@[] options:NSDirectoryEnumerationSkipsHiddenFiles error:nil];
+    if (FolderFiles.count == 0) {
+        return true;
+    } else {
+        return false;
+    }
+}
+%end
+
 %hook YTReelPlayerViewController
 %property (strong, nonatomic) UIWindow *window2;
 %property (strong, nonatomic) JGProgressHUD *hud;
