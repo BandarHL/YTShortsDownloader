@@ -66,3 +66,10 @@ fastlane/test_output
 # https://github.com/johnno1962/injectionforxcode
 
 iOSInjectionProject/
+.DS_Store
+YTShortsDownloader/.DS_Store
+YTShortsDownloader/Package/.DS_Store
+YTShortsDownloader/Package/Library/MobileSubstrate/.DS_Store
+YTShortsDownloader/Package/Library/MobileSubstrate/DynamicLibraries/.DS_Store
+YTShortsDownloader/Package/Library/.DS_Store
+.DS_Store
