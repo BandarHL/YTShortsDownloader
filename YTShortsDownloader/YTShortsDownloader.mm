@@ -48,7 +48,7 @@ free(_methods);
 _searchedClass = class_getSuperclass(_searchedClass);
 }
 }
-@class YTQTMButton; @class YTAppDelegate; @class YTReelPlayerViewController; 
+@class YTReelPlayerViewController; @class YTAppDelegate; @class YTQTMButton; 
 static Class _logos_superclass$_ungrouped$YTAppDelegate; static _Bool (*_logos_orig$_ungrouped$YTAppDelegate$application$didFinishLaunchingWithOptions$)(_LOGOS_SELF_TYPE_NORMAL YTAppDelegate* _LOGOS_SELF_CONST, SEL, UIApplication *, id);static Class _logos_superclass$_ungrouped$YTReelPlayerViewController; static void (*_logos_orig$_ungrouped$YTReelPlayerViewController$viewDidLoad)(_LOGOS_SELF_TYPE_NORMAL YTReelPlayerViewController* _LOGOS_SELF_CONST, SEL);
 static __inline__ __attribute__((always_inline)) __attribute__((unused)) Class _logos_static_class_lookup$YTQTMButton(void) { static Class _klass; if(!_klass) { _klass = objc_getClass("YTQTMButton"); } return _klass; }
 #line 7 "/Users/bandarhelal/Documents/GitHub/YTShortsDownloader/YTShortsDownloader/YTShortsDownloader.xm"
@@ -114,12 +114,21 @@ static void _logos_method$_ungrouped$YTReelPlayerViewController$viewDidLoad(_LOG
         YTReelContentView *_view = self.view;
         [_view.playbackOverlay addSubview:DownloadButton];
         
-        [NSLayoutConstraint activateConstraints:@[
-            [DownloadButton.trailingAnchor constraintEqualToAnchor:_view.trailingAnchor],
-            [DownloadButton.bottomAnchor constraintEqualToAnchor:_view.playbackOverlay.overflowButton.topAnchor],
-            [DownloadButton.heightAnchor constraintEqualToConstant:48],
-            [DownloadButton.widthAnchor constraintEqualToConstant:64]
-        ]];
+        if (self.model.isShortVideo) {
+            [NSLayoutConstraint activateConstraints:@[
+                [DownloadButton.trailingAnchor constraintEqualToAnchor:_view.trailingAnchor],
+                [DownloadButton.bottomAnchor constraintEqualToAnchor:_view.playbackOverlay.overflowButton.topAnchor],
+                [DownloadButton.heightAnchor constraintEqualToConstant:48],
+                [DownloadButton.widthAnchor constraintEqualToConstant:64]
+            ]];
+        } else {
+            [NSLayoutConstraint activateConstraints:@[
+                [DownloadButton.trailingAnchor constraintEqualToAnchor:_view.trailingAnchor],
+                [DownloadButton.bottomAnchor constraintEqualToAnchor:_view.playbackOverlay.headerView.topAnchor],
+                [DownloadButton.heightAnchor constraintEqualToConstant:48],
+                [DownloadButton.widthAnchor constraintEqualToConstant:64]
+            ]];
+        }
     }
 }
  static void _logos_method$_ungrouped$YTReelPlayerViewController$didPressDownloadButton(_LOGOS_SELF_TYPE_NORMAL YTReelPlayerViewController* _LOGOS_SELF_CONST __unused self, SEL __unused _cmd) {
@@ -144,6 +153,9 @@ static void _logos_method$_ungrouped$YTReelPlayerViewController$viewDidLoad(_LOG
             }];
             [alert addAction:download];
         }
+    }
+    if (alert.actions.count == 0) {
+        [alert setMessage:@"This video doesn't have any .mp4 format to download."];
     }
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [self closeWindow];
@@ -228,4 +240,4 @@ static void _logos_method$_ungrouped$YTReelPlayerViewController$viewDidLoad(_LOG
 
 static __attribute__((constructor)) void _logosLocalInit() {
 {Class _logos_class$_ungrouped$YTAppDelegate = objc_getClass("YTAppDelegate"); _logos_superclass$_ungrouped$YTAppDelegate = class_getSuperclass(_logos_class$_ungrouped$YTAppDelegate); { _logos_register_hook(_logos_class$_ungrouped$YTAppDelegate, @selector(application:didFinishLaunchingWithOptions:), (IMP)&_logos_method$_ungrouped$YTAppDelegate$application$didFinishLaunchingWithOptions$, (IMP *)&_logos_orig$_ungrouped$YTAppDelegate$application$didFinishLaunchingWithOptions$);}{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$YTAppDelegate, @selector(cleanCache), (IMP)&_logos_method$_ungrouped$YTAppDelegate$cleanCache, _typeEncoding); }{ char _typeEncoding[1024]; unsigned int i = 0; memcpy(_typeEncoding + i, @encode(BOOL), strlen(@encode(BOOL))); i += strlen(@encode(BOOL)); _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; memcpy(_typeEncoding + i, @encode(NSURL *), strlen(@encode(NSURL *))); i += strlen(@encode(NSURL *)); _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$YTAppDelegate, @selector(isEmpty:), (IMP)&_logos_method$_ungrouped$YTAppDelegate$isEmpty$, _typeEncoding); }Class _logos_class$_ungrouped$YTReelPlayerViewController = objc_getClass("YTReelPlayerViewController"); _logos_superclass$_ungrouped$YTReelPlayerViewController = class_getSuperclass(_logos_class$_ungrouped$YTReelPlayerViewController); { objc_property_attribute_t _attributes[16]; unsigned int attrc = 0; _attributes[attrc++] = (objc_property_attribute_t) { "T", "@\"UIWindow\"" }; _attributes[attrc++] = (objc_property_attribute_t) { "&", "" }; _attributes[attrc++] = (objc_property_attribute_t) { "N", "" }; class_addProperty(_logos_class$_ungrouped$YTReelPlayerViewController, "window2", _attributes, attrc); char _typeEncoding[1024]; sprintf(_typeEncoding, "%s@:", @encode(UIWindow *)); class_addMethod(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(window2), (IMP)&_logos_property$_ungrouped$YTReelPlayerViewController$window2, _typeEncoding); sprintf(_typeEncoding, "v@:%s", @encode(UIWindow *)); class_addMethod(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(setWindow2:), (IMP)&_logos_property$_ungrouped$YTReelPlayerViewController$setWindow2, _typeEncoding); } { objc_property_attribute_t _attributes[16]; unsigned int attrc = 0; _attributes[attrc++] = (objc_property_attribute_t) { "T", "@\"JGProgressHUD\"" }; _attributes[attrc++] = (objc_property_attribute_t) { "&", "" }; _attributes[attrc++] = (objc_property_attribute_t) { "N", "" }; class_addProperty(_logos_class$_ungrouped$YTReelPlayerViewController, "hud", _attributes, attrc); char _typeEncoding[1024]; sprintf(_typeEncoding, "%s@:", @encode(JGProgressHUD *)); class_addMethod(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(hud), (IMP)&_logos_property$_ungrouped$YTReelPlayerViewController$hud, _typeEncoding); sprintf(_typeEncoding, "v@:%s", @encode(JGProgressHUD *)); class_addMethod(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(setHud:), (IMP)&_logos_property$_ungrouped$YTReelPlayerViewController$setHud, _typeEncoding); } { _logos_register_hook(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(viewDidLoad), (IMP)&_logos_method$_ungrouped$YTReelPlayerViewController$viewDidLoad, (IMP *)&_logos_orig$_ungrouped$YTReelPlayerViewController$viewDidLoad);}{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(didPressDownloadButton), (IMP)&_logos_method$_ungrouped$YTReelPlayerViewController$didPressDownloadButton, _typeEncoding); }{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(closeWindow), (IMP)&_logos_method$_ungrouped$YTReelPlayerViewController$closeWindow, _typeEncoding); }{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; _typeEncoding[i] = 'f'; i += 1; _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(downloadProgress:), (IMP)&_logos_method$_ungrouped$YTReelPlayerViewController$downloadProgress$, _typeEncoding); }{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; memcpy(_typeEncoding + i, @encode(NSURL *), strlen(@encode(NSURL *))); i += strlen(@encode(NSURL *)); memcpy(_typeEncoding + i, @encode(NSString *), strlen(@encode(NSString *))); i += strlen(@encode(NSString *)); _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(downloadDidFinish:Filename:), (IMP)&_logos_method$_ungrouped$YTReelPlayerViewController$downloadDidFinish$Filename$, _typeEncoding); }{ char _typeEncoding[1024]; unsigned int i = 0; _typeEncoding[i] = 'v'; i += 1; _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; memcpy(_typeEncoding + i, @encode(NSError *), strlen(@encode(NSError *))); i += strlen(@encode(NSError *)); _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(downloadDidFailureWithError:), (IMP)&_logos_method$_ungrouped$YTReelPlayerViewController$downloadDidFailureWithError$, _typeEncoding); }{ char _typeEncoding[1024]; unsigned int i = 0; memcpy(_typeEncoding + i, @encode(NSString *), strlen(@encode(NSString *))); i += strlen(@encode(NSString *)); _typeEncoding[i] = '@'; i += 1; _typeEncoding[i] = ':'; i += 1; _typeEncoding[i] = 'f'; i += 1; _typeEncoding[i] = '\0'; class_addMethod(_logos_class$_ungrouped$YTReelPlayerViewController, @selector(getDownloadingPersent:), (IMP)&_logos_method$_ungrouped$YTReelPlayerViewController$getDownloadingPersent$, _typeEncoding); }} }
-#line 179 "/Users/bandarhelal/Documents/GitHub/YTShortsDownloader/YTShortsDownloader/YTShortsDownloader.xm"
+#line 191 "/Users/bandarhelal/Documents/GitHub/YTShortsDownloader/YTShortsDownloader/YTShortsDownloader.xm"

@@ -73,3 +73,7 @@ YTShortsDownloader/Package/Library/MobileSubstrate/.DS_Store
 YTShortsDownloader/Package/Library/MobileSubstrate/DynamicLibraries/.DS_Store
 YTShortsDownloader/Package/Library/.DS_Store
 .DS_Store
+*.dylib
+LatestBuild
+Packages/com.bandarhl.YTShortsDownloader_2.0_iphoneos-arm.zip
+Packages/com.bandarhl.YTShortsDownloader_2.0_iphoneos-arm.deb

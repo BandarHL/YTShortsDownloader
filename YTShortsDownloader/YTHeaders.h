@@ -86,16 +86,25 @@
 @property(readonly, nonatomic) id /*<YTSingleVideoObservable>*/ activeVideo;
 @end
 
+@interface YTReelWatchHeaderView : UIView
+@end
+
 @interface YTReelWatchPlaybackOverlayView : UIView
 @property(readonly, nonatomic) YTQTMButton *overflowButton;
+@property(strong, nonatomic, readwrite) YTReelWatchHeaderView *headerView;
 @property(readonly, nonatomic) __weak id /*<YTResponder>*/ parentResponder;
 // @property(readonly, nonatomic) NSArray *interactiveElements;
+@end
+
+@interface YTReelModel : NSObject
+@property(readonly, nonatomic, getter=isShortVideo) _Bool shortVideo;
 @end
 
 @interface YTReelPlayerViewController : UIViewController
 @property (strong, nonatomic) UIWindow *window2;
 @property (strong, nonatomic) JGProgressHUD *hud;
 @property (retain, nonatomic) YTLightweightPlayerViewController *player;
+@property(readonly, nonatomic) YTReelModel *model;
 - (void)pause;
 - (void)play;
 - (void)restart;

@@ -64,12 +64,21 @@
         YTReelContentView *_view = self.view;
         [_view.playbackOverlay addSubview:DownloadButton];
         
-        [NSLayoutConstraint activateConstraints:@[
-            [DownloadButton.trailingAnchor constraintEqualToAnchor:_view.trailingAnchor],
-            [DownloadButton.bottomAnchor constraintEqualToAnchor:_view.playbackOverlay.overflowButton.topAnchor],
-            [DownloadButton.heightAnchor constraintEqualToConstant:48],
-            [DownloadButton.widthAnchor constraintEqualToConstant:64]
-        ]];
+        if (self.model.isShortVideo) {
+            [NSLayoutConstraint activateConstraints:@[
+                [DownloadButton.trailingAnchor constraintEqualToAnchor:_view.trailingAnchor],
+                [DownloadButton.bottomAnchor constraintEqualToAnchor:_view.playbackOverlay.overflowButton.topAnchor],
+                [DownloadButton.heightAnchor constraintEqualToConstant:48],
+                [DownloadButton.widthAnchor constraintEqualToConstant:64]
+            ]];
+        } else {
+            [NSLayoutConstraint activateConstraints:@[
+                [DownloadButton.trailingAnchor constraintEqualToAnchor:_view.trailingAnchor],
+                [DownloadButton.bottomAnchor constraintEqualToAnchor:_view.playbackOverlay.headerView.topAnchor],
+                [DownloadButton.heightAnchor constraintEqualToConstant:48],
+                [DownloadButton.widthAnchor constraintEqualToConstant:64]
+            ]];
+        }
     }
 }
 %new - (void)didPressDownloadButton {
@@ -94,6 +103,9 @@
             }];
             [alert addAction:download];
         }
+    }
+    if (alert.actions.count == 0) {
+        [alert setMessage:@"This video doesn't have any .mp4 format to download."];
     }
     [alert addAction:[UIAlertAction actionWithTitle:@"Cancel" style:UIAlertActionStyleCancel handler:^(UIAlertAction * _Nonnull action) {
         [self closeWindow];
