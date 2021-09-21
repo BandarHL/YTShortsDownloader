@@ -8,6 +8,9 @@
 #import "BHDownload.h"
 #import "JGProgressHUD/include/JGProgressHUD.h"
 #import "BHVideoManager/BHVideoManager.h"
+#import <Photos/Photos.h>
+#import <SafariServices/SafariServices.h>
+
 
 @interface YTQTMButton : UIButton
 @property(readonly, nonatomic) long long pageStyle;
@@ -115,6 +118,9 @@
 - (NSString *)getDownloadingPersent:(float)per;
 @end
 
+@interface YTReelPlayerViewController () <BHDownloadDelegate>
+@end
+
 @interface YTReelContentView : UIView
 @property(readonly, nonatomic) YTReelWatchPlaybackOverlayView *playbackOverlay;
 @property(readonly, nonatomic) __weak id parentResponder;
@@ -124,3 +130,47 @@
 - (void)cleanCache;
 - (BOOL)isEmpty:(NSURL *)url;
 @end
+
+@interface PINCachedAnimatedImage : NSObject
+@property(readonly, nonatomic) NSData *data;
+@end
+
+@interface ASDisplayNode: NSObject
+@property (readonly) UIView *view;
+@end
+
+@interface ASImageNode: ASDisplayNode
+@property (atomic, strong, readwrite) UIImage *image;
+@property(retain) id /*<ASAnimatedImageProtocol>*/ animatedImage;
+@end
+
+@interface ASNetworkImageNode: ASImageNode
+@property (atomic, copy, readwrite) NSURL *URL;
+@end
+
+@interface YTImageZoomNode: ASNetworkImageNode
+- (void)saveHandler;
+- (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo;
+@end
+
+static UIViewController *_topMostController(UIViewController *cont) {
+    UIViewController *topController = cont;
+    while (topController.presentedViewController) {
+        topController = topController.presentedViewController;
+    }
+    if ([topController isKindOfClass:[UINavigationController class]]) {
+        UIViewController *visible = ((UINavigationController *)topController).visibleViewController;
+        if (visible) {
+            topController = visible;
+        }
+    }
+    return (topController != cont ? topController : nil);
+}
+static UIViewController *topMostController() {
+    UIViewController *topController = [UIApplication sharedApplication].keyWindow.rootViewController;
+    UIViewController *next = nil;
+    while ((next = _topMostController(topController)) != nil) {
+        topController = next;
+    }
+    return topController;
+}

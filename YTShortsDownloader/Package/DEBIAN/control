@@ -1,6 +1,6 @@
 Package: com.bandarhl.YTShortsDownloader
 Name: YTShortsDownloader
-Version: 2.0
+Version: 2.1
 Description: Awesome tweak to download youtube shorts
 Section: Tweaks
 Depends: firmware (>= 13.0), mobilesubstrate

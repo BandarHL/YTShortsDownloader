@@ -7,6 +7,7 @@
 //
 
 #import "BHDownload.h"
+#import <ImageIO/ImageIO.h>
 
 @implementation BHDownload
 + (instancetype)sharedSessionWithID:(NSString *)ID {

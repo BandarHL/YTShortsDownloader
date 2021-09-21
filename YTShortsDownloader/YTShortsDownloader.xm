@@ -1,5 +1,4 @@
 #import <UIKit/UIKit.h>
-#import <Photos/Photos.h>
 #import "YTHeaders.h"
 
 %config(generator=internal)
@@ -186,5 +185,48 @@
     [numberFormatter setNumberStyle:NSNumberFormatterPercentStyle];
     NSNumber *number = [NSNumber numberWithFloat:per];
     return [numberFormatter stringFromNumber:number];
+}
+%end
+
+
+%hook YTImageZoomNode
+- (void)displayDidFinish {
+    %orig;
+    if (self.view.subviews.count == 1) {
+        UIButton *downloadButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        [downloadButton setImage:[UIImage systemImageNamed:@"arrow.down"] forState:UIControlStateNormal];
+        [downloadButton addTarget:self action:@selector(saveHandler) forControlEvents:UIControlEventTouchUpInside];
+        [downloadButton setTranslatesAutoresizingMaskIntoConstraints:false];
+        if (self.animatedImage == nil) {
+            [self.view addSubview:downloadButton];
+            
+            [NSLayoutConstraint activateConstraints:@[
+                [downloadButton.leadingAnchor constraintEqualToAnchor:self.view.leadingAnchor],
+                [downloadButton.bottomAnchor constraintEqualToAnchor:self.view.bottomAnchor],
+                [downloadButton.heightAnchor constraintEqualToConstant:25],
+                [downloadButton.widthAnchor constraintEqualToConstant:25]
+            ]];
+        }
+    }
+}
+%new - (void)saveHandler {
+    if (self.image != nil) {
+        UIImageWriteToSavedPhotosAlbum(self.image, self, @selector(image:didFinishSavingWithError:contextInfo:), nil);
+    } else if (self.animatedImage != nil) {
+        NSString *url = [NSString stringWithFormat:@"https://ezgif.com/webp-to-gif?url=%@", self.URL.absoluteString];
+        SFSafariViewController *webVC = [[SFSafariViewController alloc] initWithURL:[NSURL URLWithString:url]];
+        [topMostController() presentViewController:webVC animated:true completion:nil];
+    }
+}
+%new - (void)image:(UIImage *)image didFinishSavingWithError:(NSError *)error contextInfo:(void *)contextInfo {
+    if (error) {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"hi" message:error.localizedDescription preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [topMostController() presentViewController:alert animated:true completion:nil];
+    } else {
+        UIAlertController *alert = [UIAlertController alertControllerWithTitle:@"hi" message:@"Image saved" preferredStyle:UIAlertControllerStyleAlert];
+        [alert addAction:[UIAlertAction actionWithTitle:@"OK" style:UIAlertActionStyleCancel handler:nil]];
+        [topMostController() presentViewController:alert animated:true completion:nil];
+    }
 }
 %end

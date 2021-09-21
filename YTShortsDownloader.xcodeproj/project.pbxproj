@@ -43,6 +43,7 @@
 		501D0AEA2645CEC500157631 /* SceneKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501D0AE92645CEC500157631 /* SceneKit.framework */; };
 		501D0AEC2645CECE00157631 /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501D0AEB2645CECE00157631 /* ImageIO.framework */; };
 		501D0AEE2645CEE200157631 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501D0AED2645CEE200157631 /* CoreGraphics.framework */; };
+		501E87C926FA9CFB00C7DA04 /* SafariServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 501E87C826FA9CFB00C7DA04 /* SafariServices.framework */; };
 		50882E0626519B23003C7375 /* BHVideoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 50882E0426519B23003C7375 /* BHVideoManager.h */; };
 		50882E0726519B23003C7375 /* BHVideoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 50882E0526519B23003C7375 /* BHVideoManager.m */; };
 		50882E0926519DA4003C7375 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50882E0826519DA4003C7375 /* CoreMedia.framework */; };
@@ -95,6 +96,7 @@
 		501D0AE92645CEC500157631 /* SceneKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SceneKit.framework; path = System/Library/Frameworks/SceneKit.framework; sourceTree = SDKROOT; };
 		501D0AEB2645CECE00157631 /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		501D0AED2645CEE200157631 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		501E87C826FA9CFB00C7DA04 /* SafariServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SafariServices.framework; path = System/Library/Frameworks/SafariServices.framework; sourceTree = SDKROOT; };
 		50882E0426519B23003C7375 /* BHVideoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BHVideoManager.h; sourceTree = "<group>"; };
 		50882E0526519B23003C7375 /* BHVideoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BHVideoManager.m; sourceTree = "<group>"; };
 		50882E0826519DA4003C7375 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
@@ -115,6 +117,7 @@
 				501D0AE82645CDAC00157631 /* Photos.framework in Frameworks */,
 				501D0AEC2645CECE00157631 /* ImageIO.framework in Frameworks */,
 				501D0AEE2645CEE200157631 /* CoreGraphics.framework in Frameworks */,
+				501E87C926FA9CFB00C7DA04 /* SafariServices.framework in Frameworks */,
 				50882E0F26519DBD003C7375 /* MediaPlayer.framework in Frameworks */,
 				501D0AEA2645CEC500157631 /* SceneKit.framework in Frameworks */,
 				501D0A962645C7EC00157631 /* Foundation.framework in Frameworks */,
@@ -147,6 +150,7 @@
 		501D0A922645C7EC00157631 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				501E87C826FA9CFB00C7DA04 /* SafariServices.framework */,
 				50882E1026519DC2003C7375 /* MediaToolbox.framework */,
 				50882E0E26519DBD003C7375 /* MediaPlayer.framework */,
 				50882E0B26519DB6003C7375 /* AVFoundation.framework */,
@@ -495,7 +499,7 @@
 				MonkeyDevBuildPackageOnAnyBuild = NO;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
-				MonkeyDevDeviceIP = 192.168.137.14;
+				MonkeyDevDeviceIP = 192.168.137.195;
 				MonkeyDevDevicePassword = alpine;
 				MonkeyDevDevicePort = 22;
 				MonkeyDevInstallOnAnyBuild = YES;
@@ -524,7 +528,7 @@
 				MonkeyDevBuildPackageOnAnyBuild = NO;
 				MonkeyDevClearUiCacheOnInstall = NO;
 				MonkeyDevCopyOnBuild = NO;
-				MonkeyDevDeviceIP = 192.168.137.14;
+				MonkeyDevDeviceIP = 192.168.137.195;
 				MonkeyDevDevicePassword = alpine;
 				MonkeyDevDevicePort = 22;
 				MonkeyDevInstallOnAnyBuild = YES;
