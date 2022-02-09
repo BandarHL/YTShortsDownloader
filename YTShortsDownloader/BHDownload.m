@@ -7,29 +7,12 @@
 //
 
 #import "BHDownload.h"
-#import <ImageIO/ImageIO.h>
 
 @implementation BHDownload
-+ (instancetype)sharedSessionWithID:(NSString *)ID {
-    static BHDownload *sharedManager = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{
-        sharedManager = [[self alloc] initWithBackgroundSessionID:ID];
-    });
-    return sharedManager;
-}
 - (instancetype )init {
     self = [super init];
     if (self) {
         self.Session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
-    }
-    return self;
-}
-
-- (instancetype )initWithBackgroundSessionID:(NSString *)ID {
-    self = [super init];
-    if (self) {
-        self.Session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration backgroundSessionConfigurationWithIdentifier:ID] delegate:self delegateQueue:[NSOperationQueue mainQueue]];
     }
     return self;
 }

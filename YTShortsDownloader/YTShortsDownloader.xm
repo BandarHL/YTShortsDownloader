@@ -93,7 +93,7 @@
         if ([format.formatStream.mimeType containsString:@"video/mp4"]) {
             UIAlertAction *download = [UIAlertAction actionWithTitle:[NSString stringWithFormat:@"%dx%d", format.formatStream.height, format.formatStream.width] style:UIAlertActionStyleDefault handler:^(UIAlertAction * _Nonnull action) {
                 
-                BHDownload *DownloadManager = [[BHDownload alloc] initWithBackgroundSessionID:NSUUID.UUID.UUIDString];
+                BHDownload *DownloadManager = [[BHDownload alloc] init];
                 [DownloadManager downloadFileWithURL:[NSURL URLWithString:format.formatStream.URL]];
                 [DownloadManager setDelegate:self];
                 self.hud = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleDark];
