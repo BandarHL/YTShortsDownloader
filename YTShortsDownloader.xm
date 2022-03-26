@@ -81,11 +81,7 @@
     }
 }
 %new - (void)didPressDownloadButton {
-    self.window2 = [[UIWindow alloc] initWithFrame:UIScreen.mainScreen.bounds];
-    self.window2.windowLevel = UIWindowLevelAlert;
-    [self.window2 setRootViewController:[[UIViewController alloc] init]];
-    [self.window2 makeKeyAndVisible];
-    
+
     [self reelContentViewRequestsSuspendPlayback:self];
 
     YTSingleVideoController *video = self.player.activeVideo;
@@ -99,7 +95,6 @@
     NSMutableArray *LinksArray = [[NSMutableArray alloc] init];
     NSMutableArray *Qualities = [[NSMutableArray alloc] init];
 
-    NSString *AudioLink = nil;
 
     for (CFIndex Counter = 0; Counter < StreamingData.adaptiveFormatsArray.count; Counter ++) {
     if ([[[StreamingData.adaptiveFormatsArray objectAtIndex:Counter] mimeType] containsString:@"video/mp4"] && [[StreamingData.adaptiveFormatsArray objectAtIndex:Counter] hasInitRange] && ![Qualities containsObject:[[StreamingData.adaptiveFormatsArray objectAtIndex:Counter] qualityLabel]]) {
@@ -107,34 +102,24 @@
     [LinksArray addObject:[NSString stringWithFormat:@"%@",[[StreamingData.adaptiveFormatsArray objectAtIndex:Counter] URL]]];
     [Qualities addObject:[NSString stringWithFormat:@"%@",[[StreamingData.adaptiveFormatsArray objectAtIndex:Counter] qualityLabel]]];
     }
-    if ([[[StreamingData.adaptiveFormatsArray objectAtIndex:Counter] mimeType] containsString:@"audio/mp4"])
-    AudioLink = [NSString stringWithFormat:@"%@",[[StreamingData.adaptiveFormatsArray objectAtIndex:Counter] URL]];
     }
 
-    [Qualities addObject:@"Download Audio"];
+    [BHDownload InitAlertWithTitle:@"Hola" Message:@"" Buttons:Qualities CancelButtonTitle:@"Cancel" AlertStyle:UIAlertControllerStyleActionSheet OnViewController:topMostController() handler:^(NSString * _Nonnull ButtonTitle, NSUInteger index) {
 
-    [BHDownload InitAlertWithTitle:@"Hola" Message:@"" Buttons:Qualities CancelButtonTitle:@"Cancel" AlertStyle:UIAlertControllerStyleActionSheet OnViewController:self.window2.rootViewController handler:^(NSString * _Nonnull ButtonTitle, NSUInteger index) {
-           
-        if (index >= 0 && ![ButtonTitle isEqual:@"Download Audio"]) {
-            
+        if (index >= 0) {
+
             BHDownload *DownloadManager = [[BHDownload alloc] init];
             [DownloadManager downloadFileWithURL:[NSURL URLWithString:LinksArray[index]]];
             [DownloadManager setDelegate:self];
             self.hud = [JGProgressHUD progressHUDWithStyle:JGProgressHUDStyleDark];
             self.hud.textLabel.text = @"Downloading";
-            [self.hud showInView:self.window2.rootViewController.view];
-            
+            [self.hud showInView:topMostController().view];
+
         }
        }];
     
 }
-%new - (void)closeWindow {
-    self.window2.rootViewController.view = nil;
-    self.window2.rootViewController = nil;
-    self.window2.windowScene = nil;
-    [self.window2 setHidden:true];
-    [self reelContentViewRequestsResumePlayback:self];
-}
+ 
 %new - (void)downloadProgress:(float)progress {
     self.hud.detailTextLabel.text = [self getDownloadingPersent:progress];
 }
@@ -151,7 +136,7 @@
                 dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                     dispatch_async(dispatch_get_main_queue(), ^{
                         [self.hud dismiss];
-                        [self closeWindow];
+
                     });
                 });
             } else {
@@ -171,9 +156,9 @@
                                         [self.hud dismiss];
                                         UIActivityViewController *acVC = [[UIActivityViewController alloc] initWithActivityItems:@[audioSession.outputURL] applicationActivities:nil];
                                         [acVC setCompletionWithItemsHandler:^(UIActivityType _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-                                            [self closeWindow];
+//
                                         }];
-                                        [self.window2.rootViewController presentViewController:acVC animated:true completion:nil];
+                                        [topMostController() presentViewController:acVC animated:true completion:nil];
                                     });
                                 });
                             }
@@ -186,15 +171,15 @@
         [self.hud dismiss];
         UIActivityViewController *acVC = [[UIActivityViewController alloc] initWithActivityItems:@[newFilePath] applicationActivities:nil];
         [acVC setCompletionWithItemsHandler:^(UIActivityType _Nullable activityType, BOOL completed, NSArray * _Nullable returnedItems, NSError * _Nullable activityError) {
-            [self closeWindow];
+//
         }];
-        [self.window2.rootViewController presentViewController:acVC animated:true completion:nil];
+        [topMostController() presentViewController:acVC animated:true completion:nil];
     }
 }
 %new - (void)downloadDidFailureWithError:(NSError *)error {
     if (error) {
         [self.hud dismiss];
-        [self closeWindow];
+ 
     }
 }
 %new - (NSString *)getDownloadingPersent:(float)per {
