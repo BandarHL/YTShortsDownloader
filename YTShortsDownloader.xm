@@ -79,6 +79,13 @@
             ]];
         }
     }
+    
+    
+[DownloadButton.imageView setTranslatesAutoresizingMaskIntoConstraints:NO];
+[DownloadButton.imageView.topAnchor constraintEqualToAnchor:DownloadButton.topAnchor constant:8].active = YES;
+[DownloadButton.imageView.leadingAnchor constraintEqualToAnchor:DownloadButton.leadingAnchor constant:19].active = YES;
+[DownloadButton.imageView.trailingAnchor constraintEqualToAnchor:DownloadButton.trailingAnchor constant:-19].active = YES;
+[DownloadButton.imageView.bottomAnchor constraintEqualToAnchor:DownloadButton.bottomAnchor constant:-8].active = YES;
 }
 %new - (void)didPressDownloadButton {
 
@@ -199,6 +206,7 @@
         [downloadButton setImage:[UIImage systemImageNamed:@"arrow.down"] forState:UIControlStateNormal];
         [downloadButton addTarget:self action:@selector(saveHandler) forControlEvents:UIControlEventTouchUpInside];
         [downloadButton setTranslatesAutoresizingMaskIntoConstraints:false];
+        
         if (self.animatedImage == nil) {
             [self.view addSubview:downloadButton];
             
@@ -208,6 +216,7 @@
                 [downloadButton.heightAnchor constraintEqualToConstant:25],
                 [downloadButton.widthAnchor constraintEqualToConstant:25]
             ]];
+
         }
     }
 }
